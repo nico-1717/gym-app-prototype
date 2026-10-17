@@ -9,7 +9,7 @@ A mobile app to plan and log gym workouts, built solo in **Unity (C#)** between 
 | **What it does** | Create workout plans, browse an exercise library by muscle group, run a session that logs sets, reps, weight and rest times |
 | **Size** | ~8,800 lines of my own C# (~7,600 without blank lines and comments) in 39 scripts |
 | **Local data** | SQLite, 7 tables, all queries in one class |
-| **Online data** | 13 PHP endpoints that serve a shared exercise library from MySQL |
+| **Online data** | 15 PHP endpoints that serve a shared exercise library from MySQL |
 | **Stack** | Unity 2021.3, C#, SQLite (Mono.Data.Sqlite), TextMesh Pro, PHP, MySQL |
 
 ## How it fits together
@@ -19,7 +19,7 @@ flowchart LR
     UI["Unity UI pages<br/>Page/Menu, Page/Training"] --> STATE["AppManager + Globals<br/>app state, UI references"]
     UI --> SQL["SQLiteEvents.cs<br/>local SQLite, 7 tables"]
     UI --> WEB["Page/Web<br/>UnityWebRequest"]
-    WEB --> API["backend-php/<br/>13 PHP endpoints"]
+    WEB --> API["backend-php/<br/>15 PHP endpoints"]
     API --> DB[("MySQL")]
 ```
 
@@ -52,7 +52,6 @@ Identifiers and comments are in Italian. Quick glossary: *scheda* = plan, *eserc
 
 ## Status and known gaps
 
-- The image endpoints were removed (see History), so exercise images from the server are not available.
 - Prototype: the statistics screen is not implemented and there are no automated tests.
 - The app relies on a large static `Globals` class.
 - The server address in the code is a placeholder (`your-server.example`); the online features need your own server and a `ConnectionSettings.php` file, which is not included.
@@ -69,7 +68,7 @@ If I rebuilt it, I would split the `Globals` class into smaller services, put th
 ## History
 
 - 2021–2023: built the app.
-- 2026: cleaned it up for publication (this README, placeholder server address, and removal of the two image endpoints, `GetImage.php` and `InsertImage.php`, which did not meet basic security standards: the app code still references them, so image upload and download need to be rewritten). The cleanup was done with help from an AI assistant.
+- 2026: cleaned it up for publication (this README, placeholder server address, and two backend fixes: `GetImage.php` now uses a prepared statement, and `InsertImage.php` accepts only images with a safe file name). The cleanup was done with help from an AI assistant.
 
 ## Run it
 
